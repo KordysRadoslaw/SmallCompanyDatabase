@@ -1,0 +1,24 @@
+CREATE TABLE Pracownicy(
+id_pracownika INT(3),
+imie VARCHAR(20) NOT NULL,
+nazwisko VARCHAR(20) NOT NULL,
+pesel VARCHAR(11) NOT NULL,
+adres VARCHAR(100) NOT NULL,
+nr_telefonu INT(15) NOT NULL,
+kraj VARCHAR(20) NOT NULL,
+kompetencje VARCHAR(100),
+stanowisko VARCHAR(30) NOT NULL);
+
+ALTER TABLE Pracownicy ADD PRIMARY KEY (id_pracownika);
+AlTER TABLE Pracownicy MODIFY COLUMN id_pracownika INT AUTO_INCREMENT;
+
+INSERT INTO Pracownicy VALUES(1, 'Andrzej','Zyg', '95989898123','Warszawa, ul. Biskupska 10/70', 782789789, 'USA', 'język angielski', 'Starszy bułkowy');
+INSERT INTO Pracownicy VALUES(2, 'Radoslaw','Kowalski', '95987595823', 'Warszawa, ul. Biskupska 10/69', 564789652, 'Niemcy', 'język angielski', 'Pomocnik mechanika');
+INSERT INTO Pracownicy VALUES(3, 'Zbigniew','Kowalczuk', '45268536547', 'Warszawa, ul. Biskupska 10/68', 693582471, 'Wielka Brytania', 'język angielski', 'Front-end Developer');
+INSERT INTO Pracownicy VALUES(4, 'Norbert','Kowal', '98577745877', 'Łokietniki Małe ul. Zakrapiana 98', 639563985, 'Polska', 'język angielski', 'Front-end Developer');
+INSERT INTO Pracownicy VALUES(5, 'Patryk','Kars', '96369636963', 'Pomyje Wielkie ul. Brudna 11', 748956321, 'Polska', 'język angielski', 'Back-end Developer');
+INSERT INTO Pracownicy VALUES(6, 'Adam','Kombiwar', '74147896523', 'Sucharów 69', 582456951, 'Polska', 'prawo jazdy kat. B', 'Back-end Developer');
+INSERT INTO Pracownicy VALUES(7, 'Miroslaw','Ojczenasz', '98745632145', 'Ścieki Wykolejone ul. Pomidorowa 23', 569563555, 'Polska', 'prawo jazdy kat. B', 'Back-end Developer');
+INSERT INTO Pracownicy VALUES(8, 'Tomasz','Żelazko', '32569852362', 'Złodziejów ul. Męczenników 88', 582666333, 'Polska', 'prawo jazdy kat. B', 'Architekt informatyczny');
+INSERT INTO Pracownicy VALUES(9, 'Marcin','Kotwica', '45123697854', 'Grzybów Straszny ul. Ponura 1', 789999996, 'Polska', 'ukończona szkoła podstawowa', 'Architekt informatyczny');
+INSERT INTO Pracownicy VALUES(10, 'Eustachy','Suchy', '98563211112', 'Olsztyn ul. Prosta 38', 513222323, 'Polska', 'inżynier systemów informatycznych', 'Architekt informatyczny');

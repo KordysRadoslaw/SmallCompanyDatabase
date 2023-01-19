@@ -1,0 +1,33 @@
+CREATE TABLE Przydzial(
+id_przydzialu INT(3),
+id_pracownika INT(3),
+id_projektu INT(3),
+czas_rozpoczecia_przydzialu DATE,
+czas_zakonczenia_przydzialu DATE,
+rola_pracownika_w_projekcie VARCHAR(50));
+
+ALTER TABLE Przydzial ADD PRIMARY KEY (id_przydzialu);
+ALTER TABLE Przydzial ADD CONSTRAINT fk_projekt FOREIGN KEY (id_projektu) REFERENCES Projekt(id_projektu);
+ALTER TABLE Przydzial ADD CONSTRAINT fk_pracownik FOREIGN KEY (id_pracownika) REFERENCES Pracownicy(id_pracownika);
+AlTER TABLE Przydzial MODIFY COLUMN id_przydzialu INT AUTO_INCREMENT;
+
+INSERT INTO Przydzial VALUES(1, 2, 1,'2020-01-01', '2022-02-20', 'Dyrektor');
+INSERT INTO Przydzial VALUES(2, 4, 2, '2020-01-02', '2022-02-20', 'Prezes');
+INSERT INTO Przydzial VALUES(3, 6, 3, '2020-01-03', '2022-02-20', 'Prezes');
+INSERT INTO Przydzial VALUES(4, 5, 4, '2020-01-04', '2022-02-20', 'Prezes');
+INSERT INTO Przydzial VALUES(5, 10, 4, '2020-02-01', '2020-12-20', 'Pracownik biurowy');
+INSERT INTO Przydzial VALUES(6, 3, 5, '2020-02-11', '2020-12-20', 'Pracownik biurowy');
+INSERT INTO Przydzial VALUES(7, 5, 6, '2020-02-27', '2020-12-20', 'Pracownik biurowy');
+INSERT INTO Przydzial VALUES(8, 6, 2, '2020-03-12', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(9, 1, 3, '2020-03-01', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(10, 3, 8, '2020-05-16', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(11, 10, 9, '2020-05-17', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(12, 9, 10, '2020-05-17', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(13, 5, 1, '2020-06-18', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(14, 1, 6,'2020-06-20', '2020-12-20', 'Pracownik fizyczny');
+INSERT INTO Przydzial VALUES(15, 6, 4, '2020-02-20', '2020-12-20', 'Konserwator');
+INSERT INTO Przydzial VALUES(16, 2, 7, '2020-02-01', '2020-12-20', 'Developer');
+INSERT INTO Przydzial VALUES(17, 7, 1, '2020-05-20', '2020-12-20', 'Developer');
+INSERT INTO Przydzial VALUES(18, 10, 1, '2020-04-20', '2020-12-20', 'Developer');
+INSERT INTO Przydzial VALUES(19, 8, 1, '2020-06-10', '2020-12-20', 'Developer');
+INSERT INTO Przydzial VALUES(20, 10, 1, '2020-08-15', '2020-12-20', 'Developer');

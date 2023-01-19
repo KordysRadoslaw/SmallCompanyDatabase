@@ -1,0 +1,29 @@
+UPDATE Projekt SET wielkosc='Duża' WHERE id_projektu = 2;
+UPDATE Projekt SET wielkosc='Duża', cena = 85000, jednostka = 'usd' WHERE cena = 299 AND klient = 'Drukarnia';
+UPDATE Projekt SET klient='Marianowomix' WHERE id_projektu = 5 AND wielkosc = 'Średni';
+UPDATE Projekt SET cena=cena*0.80 WHERE cena<1000; 
+UPDATE Projekt INNER JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu INNER JOIN Pracownicy ON
+Przydzial.id_pracownika=Pracownicy.id_pracownika SET cena=cena*1.20 WHERE Pracownicy.kraj LIKE "%Polska%";
+UPDATE Projekt SET jednostka="eur" WHERE cena < 500;
+UPDATE Pracownicy SET imie='Andrew' WHERE imie = 'Andrzej';
+UPDATE Pracownicy SET nr_telefonu='585666991', kraj = 'Niemcy' WHERE nazwisko = 'Żelazko';
+UPDATE Pracownicy SET kompetencje='ukończone studia', stanowisko= 'Kierownik' WHERE pesel = 45123654;
+UPDATE Przydzial INNER JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika SET rola_pracownika_w_projekcie='Pracownik fizyczny' WHERE imie LIKE 'Radoslaw';
+UPDATE Przydzial LEFT JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika SET czas_zakonczenia_przydzialu=CURRENT_TIMESTAMP WHERE klient IS NOT NULL AND kraj='Polska';  
+UPDATE Przydzial INNER JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu SET czas_rozpoczecia_przydzialu=CURRENT_TIMESTAMP, rola_pracownika_w_projekcie='Nowoprzydzielony', kompetencje='do ustalenia' WHERE czas_zakonczenia_przydzialu IS NULL AND kompetencje IS NULL;
+UPDATE Projekt INNER JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu SET wielkosc='Duża' WHERE Przydzial.id_projektu=2;
+
+SET FOREIGN_KEY_CHECKS = 0
+
+DELETE FROM Projekt WHERE cena<500;
+DELETE FROM Projekt WHERE czas_rozpoczecia<'2017-01-02'; 
+DELETE FROM Projekt WHERE jednostka NOT LIKE '%zł%' OR jednostka LIKE '%usd%';
+DELETE FROM Pracownicy WHERE pesel<75000000000;
+DELETE FROM Pracownicy WHERE kompetencje IS NULL;
+DELETE FROM Pracownicy WHERE kraj NOT LIKE 'Polska';
+DELETE FROM Pracownicy WHERE stanowisko LIKE '%archit%';
+DELETE FROM Przydzial WHERE rola_pracownika_w_projekcie IS NULL;
+DELETE Przydzial, Projekt FROM Przydzial INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE czas_zakonczenia_przydzialu LIKE'2021-%-%' AND cena<500 AND jednostka LIKE'zł';
+DELETE Przydzial FROM Przydzial;
+
+//error 1451 - blad jest jeśli klucz obcy odnosi się do klucza glownego innej tabeli. ustawienie SET FOREIGN_KEY_CHECKS = 0 pomija sprawdzanie kluczy

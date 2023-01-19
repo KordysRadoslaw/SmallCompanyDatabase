@@ -1,0 +1,59 @@
+CREATE VIEW View_Projekt_wszystko AS SELECT * FROM Projekt;
+CREATE VIEW View_Projekt_wszystkie_wiersze AS SELECT COUNT(*) FROM Pracownicy;
+CREATE VIEW View_Projekt_maly_pracownicy AS SELECT klient, wielkosc, imie, nazwisko, pesel FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika WHERE wielkosc LIKE 'MaĹ‚y' ORDER BY klient;
+CREATE VIEW View_Projekt_sredni_pracownicy AS SELECT klient, wielkosc, imie, nazwisko, pesel FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika WHERE wielkosc LIKE 'Ĺšredni' ORDER BY klient;
+CREATE VIEW View_Projekt_duzy_pracownicy AS SELECT klient, wielkosc, imie, nazwisko, pesel FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika WHERE wielkosc LIKE 'DuĹĽy' ORDER BY klient;
+CREATE VIEW View_Projekt_cena AS SELECT CONCAT(klient, ' = ', cena, ' ', jednostka) AS KlientCena FROM Projekt ORDER BY cena;
+CREATE VIEW View_Projekt_cena_wieksza50 AS SELECT klient, cena, jednostka FROM Projekt WHERE cena > 50000 ORDER BY cena;
+CREATE VIEW View_Projekt_ilosc_jednostek AS SELECT jednostka, COUNT(jednostka) FROM Projekt GROUP BY jednostka;
+CREATE VIEW View_Projekt_cena_mniejsza50 AS SELECT klient, cena, jednostka FROM Projekt WHERE cena < 50000 ORDER BY cena;
+CREATE VIEW View_Projekt_cena_pomiedzy60_75 AS SELECT klient, cena, jednostka FROM Projekt WHERE cena BETWEEN 60000 AND 75000 ORDER BY klient;
+CREATE VIEW View_Projekt_klient_data_przydzialu20 AS SELECT klient, czas_rozpoczecia_przydzialu, czas_zakonczenia_przydzialu FROM Projekt INNER JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu WHERE czas_rozpoczecia_przydzialu LIKE '2020-%-%' AND czas_zakonczenia_przydzialu LIKE '2020-%-%' ORDER BY klient;
+CREATE VIEW View_Projekt_jednostka AS SELECT klient, jednostka FROM Projekt WHERE jednostka NOT LIKE 'zĹ‚';
+CREATE VIEW View_Projekt_pracownik_kraj AS SELECT DISTINCT klient, imie, nazwisko, kraj FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika;
+CREATE VIEW View_Projekt_pracownik_inny_kraj AS SELECT DISTINCT klient, imie, nazwisko, kraj FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika WHERE kraj NOT LIKE 'Polska';
+CREATE VIEW View_Projekt_stanowisko AS SELECT stanowisko, rola_pracownika_w_projekcie, klient FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika;
+CREATE VIEW View_Projekt_wielkosc_termin_pracownicy AS SELECT wielkosc, czas_rozpoczecia, czas_zakonczenia, imie, nazwisko, rola_pracownika_w_projekcie FROM Projekt LEFT JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika;
+CREATE VIEW View_Projekt_ilosc AS SELECT COUNT(*) AS iloscProjektow FROM Projekt;
+CREATE VIEW View_Projekty_srednia_cena AS SELECT AVG(cena) AS sredniaCena FROM Projekt;
+CREATE VIEW View_Projekty_ilosc_w_dacie AS SELECT czas_rozpoczecia, COUNT(klient) FROM Projekt GROUP BY czas_rozpoczecia;
+CREATE VIEW View_Przydzial_wszystko AS SELECT * FROM Przydzial;
+CREATE VIEW View_Przydzial_wszystkie_wiersze AS SELECT COUNT(*) FROM Przydzial;
+CREATE VIEW View_Przydzial_pracownicy AS SELECT rola_pracownika_w_projekcie, imie, nazwisko, pesel, kraj FROM Przydzial INNER JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika ORDER BY kraj;
+CREATE VIEW View_Przydzial_tel_pracownikow_i_przydzial_zagranica AS SELECT DISTINCT imie, nazwisko, kraj, nr_telefonu, kompetencje, stanowisko, klient FROM Przydzial LEFT JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE kraj NOT LIKE 'Polska' ORDER BY klient;
+CREATE VIEW View_Przydzial_kraj AS SELECT DISTINCT klient, kraj FROM Przydzial INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu INNER JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika ORDER BY klient;
+CREATE VIEW View_Przydzial_rozpoczecie_rok20 AS SELECT klient, czas_rozpoczecia_przydzialu FROM Przydzial INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE czas_rozpoczecia_przydzialu LIKE '2020-%-%';
+CREATE VIEW View_Przydzial_zakonczenie_rok22 AS SELECT klient, czas_zakonczenia_przydzialu FROM Przydzial INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE czas_zakonczenia_przydzialu LIKE '2022-%-%' ORDER BY czas_zakonczenia_przydzialu;
+CREATE VIEW View_Przydzial_rola_duzy_projekt AS SELECT rola_pracownika_w_projekcie, wielkosc FROM Przydzial INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE wielkosc LIKE 'DuĹĽy';
+CREATE VIEW View_Przydzial_rola_drogi_projekt_5 AS SELECT rola_pracownika_w_projekcie, klient, cena FROM Przydzial INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu ORDER BY cena DESC LIMIT 5;
+CREATE VIEW View_Przydzial_wiek95_rola AS SELECT imie, nazwisko, rola_pracownika_w_projekcie FROM Przydzial INNER JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika WHERE pesel LIKE '95_________';
+CREATE VIEW View_Przydzial_pusty AS SELECT DISTINCT imie, nazwisko FROM Przydzial INNER JOIN Pracownicy ON Przydzial.id_pracownika=Pracownicy.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE klient IS NULL;
+CREATE VIEW View_Przydzial_ilosc AS SELECT COUNT(*) AS iloscPRzydzialow FROM Przydzial;
+CREATE VIEW View_Przydzial_min_max AS SELECT MIN(czas_rozpoczecia_przydzialu), MAX(czas_zakonczenia_przydzialu) FROM Przydzial;
+CREATE VIEW View_Pracownicy_kraj AS SELECT kraj, COUNT(*) FROM Pracownicy GROUP BY kraj;
+CREATE VIEW View_Pracownicy_wszystko AS SELECT * FROM Pracownicy;
+CREATE VIEW View_Pracownicy_do_projektu AS SELECT DISTINCT imie, nazwisko, klient FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu;
+CREATE VIEW View_Pracownicy_kraj_klient_rola AS SELECT  kraj, klient, rola_pracownika_w_projekcie FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu ORDER BY kraj;
+CREATE VIEW View_Pracownicy_stanowisko_w_projekcie AS SELECT DISTINCT imie, nazwisko, rola_pracownika_w_projekcie FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika;
+CREATE VIEW View_Pracownicy_czas_rozp_przydzial AS SELECT DISTINCT imie, nazwisko, czas_rozpoczecia_przydzialu FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika ORDER BY imie;
+CREATE VIEW View_Pracownicy_czas_zak_przydzial AS SELECT DISTINCT imie, nazwisko, czas_zakonczenia_przydzialu FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika ORDER BY imie;
+CREATE VIEW View_Pracownicy_kompetencje_w_projekcie AS SELECT DISTINCT pesel, kompetencje, rola_pracownika_w_projekcie, klient FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu ORDER BY kraj;
+CREATE VIEW View_Pracownicy_w_duzych_projektach AS SELECT DISTINCT imie, nazwisko FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika INNER JOIN Projekt ON Przydzial.id_projektu=Projekt.id_projektu WHERE wielkosc LIKE 'DuĹĽy';
+CREATE VIEW View_Pracownicy_wykaz AS SELECT CONCAT(imie, ' ', nazwisko) AS Wykaz_Pracownikow FROM Pracownicy;
+CREATE VIEW View_Pracownicy_bez_przydzialu AS SELECT DISTINCT imie, nazwisko, pesel FROM Pracownicy INNER JOIN Przydzial ON Pracownicy.id_pracownika=Przydzial.id_pracownika WHERE id_przydzialu IS NULL;
+CREATE VIEW View_Pracownicy_ilosc AS SELECT COUNT(*) AS iloscPracownikow FROM Pracownicy;
+CREATE VIEW View_Pracownicy_mlodszy_starszy AS SELECT MIN(pesel), MAX(pesel) FROM Pracownicy;
+
+CREATE VIEW Union_Pracownicy_klient AS SELECT klient, GROUP_CONCAT(cena," ", czas_rozpoczecia, " ", czas_zakonczenia, 
+" ", jednostka, " ", imie, " ", nazwisko) AS dane FROM Projekt INNER JOIN Przydzial ON Projekt.id_projektu=
+Przydzial.id_projektu INNER JOIN Pracownicy ON Przydzial.id_pracownika-Pracownicy.id_pracownika WHERE 
+jednostka LIKE "%zł%" AND cena > 1000 GROUP BY klient
+UNION
+SELECT klient, GROUP_CONCAT(cena,' ', czas_rozpoczecia,' ', czas_zakonczenia,' ', jednostka,' * ', imie,' ', nazwisko)
+ AS dane FROM Projekt INNER JOIN Przydzial ON Projekt.id_projektu=Przydzial.id_projektu INNER JOIN Pracownicy ON 
+Przydzial.id_pracownika-Pracownicy.id_pracownika WHERE jednostka LIKE "%us%"AND cena < 1000 GROUP BY klient;
+
+CREATE VIEW Sub_query_1 AS SELECT CONCAT(imie,' ', nazwisko,' ', pesel) FROM Pracownicy
+ WHERE stanowisko IN (SELECT stanowisko FROM Pracownicy WHERE stanowisko LIKE '%evelop%');
+
+

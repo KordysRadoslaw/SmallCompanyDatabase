@@ -1,0 +1,23 @@
+CREATE TABLE Projekt(
+id_projektu INT(3),
+wielkosc VARCHAR(10),
+cena INT(20) NOT NULL,
+klient VARCHAR(100) NOT NULL,
+jednostka VARCHAR(5),
+czas_rozpoczecia DATE NOT NULL,
+czas_zakonczenia DATE NOT NULL);
+
+ALTER TABLE Projekt ADD PRIMARY KEY (id_projektu);
+AlTER TABLE Projekt MODIFY COLUMN id_projektu INT AUTO_INCREMENT;
+
+INSERT INTO Projekt VALUES(1, 'Duży', 75000 , 'Abram-Beton', 'zł', '2020-01-02', '2021-05-06');
+INSERT INTO Projekt VALUES(2, 'Duży', 74000 , 'Januszex', 'zł', '2019-01-02', '2019-05-06');
+INSERT INTO Projekt VALUES(3, 'Duży', 73000 , 'Drzwi I Okna', 'zł', '2018-01-02', '2018-12-12');
+INSERT INTO Projekt VALUES(4, 'Średni', 65600 , 'Kebab', 'zł', '2017-01-02', '2017-12-12');
+INSERT INTO Projekt VALUES(5, 'Średni', 64600 , 'Twinex Sp. z.o.o.', 'zł', '2016-01-02', '2016-12-12');
+INSERT INTO Projekt VALUES(6, 'Średni', 63600 , 'Abdul - Pizzeria', 'zł', '2015-01-02', '2015-10-12');
+INSERT INTO Projekt VALUES(7, 'Mały', 512 , 'Zakręcone Fryty', 'zł', '2020-01-03', '2020-01-10');
+INSERT INTO Projekt VALUES(8, 'Mały', 412 , 'Mały Joe', 'zł', '2020-01-04', '2020-01-20');
+INSERT INTO Projekt VALUES(9, 'Mały', 312 , 'Cyber-piwo', 'zł', '2020-01-05', '2020-03-10');
+INSERT INTO Projekt VALUES(10, 'Mały', 299 , 'Drukarnia', 'usd', '2020-01-08', '2020-05-10');
+
